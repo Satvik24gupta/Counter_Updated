@@ -1,0 +1,143 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    /* font-family: 'Poppins', sans-serif;
+    font-family: 'Preahvihear', sans-serif;
+    font-family: 'Roboto Mono', monospace; */
+    font-family: 'Orbitron', sans-serif;
+}
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+body{
+    background-color: #f4f4f4;
+}
+
+
+
+.container{
+    /* background-color:rgba(228, 146, 13, 0.647); */
+    display: flex;
+    justify-content: center;
+    /* margin:auto; */
+    justify-content: center;
+    /* align-items: center; */
+    /* margin:10px; */
+    /* height: 100vh; */
+    /* border: 2px solid black; */
+    padding: 25px;
+    /* width: 30%; */
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.counter{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* background-color: gray; */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 10px;
+    max-width: 700px;
+    position: relative;
+}
+
+.counter input{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    width: 70%;
+}
+
+.value{
+    /* width:50%; */
+    /* background-color: red; */
+    font-size:100px;
+    width: 100%;
+    /* margin: 50px; */
+    /* border: 1px solid black; */
+    margin-top:10px ;
+}
+.controller{
+    font-size: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controller button{
+    cursor: pointer;
+    background-color: aqua;
+    background-color:rgb(244, 241, 185);
+
+    color: rgb(7, 33, 126);
+    border-radius: 50px;
+    display:flex;
+    width: 200px;
+    margin: 20px;
+    height: 50px;
+    font-size: 50px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    align-content:center;
+    /* padding: 50px; */
+}
+
+.remove{
+    position: absolute;
+    top:10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: gray;
+    color: white;
+    font-size: 30px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+
+/* Style for the add-counter-container */
+.add-counter-container, .nav-button-group {
+    text-align: center; /* Center align the button */
+    margin-top: 20px; /* Space above the button */
+}
+
+/* Add Counter button styling */
+.add-counter,.nav-btn {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for the button */
+    font-size: 18px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    margin: 5px;
+}
+.add-counter{
+    margin-bottom: 30px;
+}
+
+/* Hover effect for Add Counter button */
+.add-counter:hover, .nav-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Active effect for Add Counter button */
+.add-counter:active,.nav-btn:active {
+    transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.selected{
+    border:1px solid gray
+}

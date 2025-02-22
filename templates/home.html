@@ -1,0 +1,45 @@
+<!-- { % load static % } -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tally Counter</title>
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- <h1>Welcome to Tally Counter</h1> -->
+    <div style="position: absolute; right: 100px; top: 20px;">
+        <a href="/logout">Log Out</a>
+    </div>
+     <nav>
+        <!-- <ul>
+            <li><button></button></li>
+            <li><button></button></li>
+            <li><button></button></li>
+        </ul> -->
+        <div class="nav-button-group">
+            <button class="nav-btn" onclick="resetAllName()">Reset All Counter Name</button>
+            <button class="nav-btn" onclick="resetAllValue()">Reset All Counter Value</button>
+            <button class="nav-btn" onclick="deleteAll()">Delete All Counter</button>
+        </div>
+     </nav>
+    <div class="container" id="container">
+        <!-- <div class="counter">
+            <div class="value">0</div>
+            <div class="controller">
+                <button class="increment" onclick="increment(1)">+</button>
+                <button class="decrement" onclick="decrement(1)">-</button>
+                <button class="reset" onclick="reset(1)">Reset</button>
+            </div>
+        </div> -->
+        <!-- Next div for add counter on click -->
+    </div>
+ 
+    <div class="add-counter-container">
+        <button class="add-counter" onclick="addCounter()">Add Counter</button>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

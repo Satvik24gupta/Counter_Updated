@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log-In Page</title>
+
+    <style>
+      .page {
+        border: 2px solid black;
+        width: 350px;
+        /* margin: auto; */
+      }
+
+      .pg {
+        border: 2px solid red;
+        height: 100vh;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pg">
+      <div class="page">
+        {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+        <form method="POST">
+            {% csrf_token %}
+          <div class="">
+            <h3>Sign in</h3>
+          </div>
+
+          <div class="email">
+            <label for="username">Email:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Username"
+            />
+          </div>
+
+          <div class="password">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="password"
+            />
+          </div>
+
+          <div class="forget">
+            <p>forget password?</p>
+          </div>
+
+          <input type="submit" value="log in" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
