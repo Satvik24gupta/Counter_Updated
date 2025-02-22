@@ -4,6 +4,22 @@ let counter_array= JSON.parse(localStorage.getItem('counter_array')) ||
     "value":0
 }]
 
+document.addEventListener("DOMContentLoaded", ()=>{
+    fetch('/get_counters', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+    })
+    .then(response=> response.json())
+    .then(data=> {
+        counter_array = data;
+        saveList();
+        updateState(counter_array);
+    })
+})
+
 let current_id=1;
 
 function saveList(){
@@ -11,71 +27,96 @@ function saveList(){
 }
 
 function addCounter(){
-    // const new_obj={
-    //     "id":counter_array.length+1,
-    //     "value":0
-    // }
-    // counter_array.push(new_obj)
-    // saveList();
-    // updateState(counter_array)
     fetch('/add_counter')
     .then(response => response.json())
     .then(data => {
         console.log(data);
         counter_array=data;
-        // saveList();
+        saveList();
         updateState(counter_array);
     })
-
-
 }
 
 function increment(id) {
-    for(let i=0;i<counter_array.length;i++){
-        if(counter_array[i].id==id){
-            counter_array[i].value++;
-            break;
-        }
-    }
     current_id=id;
-    saveList();
-    updateState(counter_array);
+    fetch('/increment_counter', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id:id})
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        counter_array=data;
+        saveList();
+        updateState(counter_array);
+    }) 
 }
 
 function decrement(id) {
-    for(let i=0;i<counter_array.length;i++){
-        if(counter_array[i].id==id){
-            counter_array[i].value--;
-            break;
-        }
-    }
     current_id=id;
-    saveList();
-    updateState(counter_array);
+    fetch('/decrement_counter', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id:id})
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        counter_array=data;
+        saveList();
+        updateState(counter_array);
+    })
 }
 function reset(id) {
-    for(let i=0;i<counter_array.length;i++){
-        if(counter_array[i].id==id){
-            counter_array[i].value=0;
-            break;
-        }
-    }
     current_id=id;
-    saveList();
-    updateState(counter_array);
+    fetch('/reset_counter', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id:id})
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        counter_array=data;
+        saveList();
+        updateState(counter_array);
+    })
 }
 
 function remove(id){
     var ans=confirm("Are you sure you want to delete this counter, This process can not be undone");
     if(!ans) return
-    for(let i=0;i<counter_array.length;i++){
-        if(counter_array[i].id==id){
-            counter_array.splice(i,1);
-            break;
-        }
-    }
-    saveList();
-    updateState(counter_array)
+    // for(let i=0;i<counter_array.length;i++){
+    //     if(counter_array[i].id==id){
+    //         counter_array.splice(i,1);
+    //         break;
+    //     }
+    // }
+    fetch('/delete_counter', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id:id})
+    })
+    .then(response => response.json())
+    .then(data=>{
+        console.log(data);
+        counter_array=data;
+        saveList();
+        updateState(counter_array);
+    })
 }
 
 function updateState(newState){
@@ -172,11 +213,23 @@ function resetAllName(){
 function resetAllValue(){
     var ans=confirm("Are you sure you want to reset values of all counters?");
     if(!ans) return
-    counter_array.forEach((item)=>{
-        item.value="0"
+    // counter_array.forEach((item)=>{
+    //     item.value="0"
+    // })
+    fetch('/reset_all_counter_value', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
     })
-    saveList()
-    updateState()
+    .then(response => response.json())
+    .then(data=>{
+        console.log(data);
+        counter_array=data;
+        saveList();
+        updateState(counter_array);
+    })
 }
 
 function deleteAll(){
@@ -185,4 +238,20 @@ function deleteAll(){
     counter_array=[]
     saveList()
     updateState()
+}
+
+// Helper function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

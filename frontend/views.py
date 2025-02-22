@@ -39,18 +39,73 @@ def logout(request):
     return redirect('login')
 
 def add_counter(request):
-    # if request.method == 'POST':
     print(request.user.id)
-    # user = User.objects.filter(id=request.user.id)
     user = request.user.id
     print("USer: ", user)
-    # print("user: ", list(user.values()))
     counter = Counter.objects.create(user_id = user)
-
-    # counter = Counter.objects.create(user_id =request.user.id)
     counter.save()
     counter = Counter.objects.all()
-    # counter = Counter.objects.all()
     counter_data = list(counter.values())
     return JsonResponse(counter_data, safe=False)
-    # return render(request, 'home.html', {'counter': counter})
+
+def increment_counter(request):
+    print(request.user.id)
+    user = request.user.id
+    request_data = json.loads(request.body)
+    print("Id from Post request: ", request_data.get("id"))
+    counter_id = request_data.get("id")
+    counter = Counter.objects.get(user_id=user, id=counter_id)
+    counter.value += 1
+    counter.save()
+    counter_data = Counter.objects.all().order_by('id')
+    counter_data = list(counter_data.values())
+    return JsonResponse(counter_data, safe=False)
+
+def decrement_counter(request):
+    print(request.user.id)
+    user = request.user.id
+    request_data = json.loads(request.body)
+    counter_id = request_data.get("id")
+    counter = Counter.objects.get(user_id=user, id=counter_id)
+    counter.value -= 1
+    counter.save()
+    counter_data = Counter.objects.all().order_by('id')
+    counter_data = list(counter_data.values())
+    return JsonResponse(counter_data, safe=False)
+
+def reset_counter(request):
+    print(request.user.id)
+    user = request.user.id
+    request_data = json.loads(request.body)
+    counter_id = request_data.get("id")
+    counter = Counter.objects.get(user_id=user, id=counter_id)
+    counter.value = 0
+    counter.save()
+    counter_data = Counter.objects.all().order_by('id')
+    counter_data = list(counter_data.values())
+    return JsonResponse(counter_data, safe=False)
+
+def delete_counter(request):
+    print(request.user.id)
+    user = request.user.id
+    request_data = json.loads(request.body)
+    counter_id = request_data.get("id")
+    counter = Counter.objects.get(user_id=user, id=counter_id)
+    counter.delete()
+    counter_data = Counter.objects.all().order_by('id')
+    counter_data = list(counter_data.values())
+    return JsonResponse(counter_data, safe=False)
+
+def reset_all_counter_value(request):
+    print(request.user.id)
+    user = request.user.id
+    Counter.objects.filter(user_id=user).update(value=0)
+    counter_data = Counter.objects.all().order_by('id')
+    counter_data = list(counter_data.values())
+    return JsonResponse(counter_data, safe=False)
+
+def get_counters(request):
+    user = request.user.id
+    counters = Counter.objects.filter(user_id=user).order_by('id')
+    counter_data = list(counters.values())
+    return JsonResponse(counter_data, safe=False)
