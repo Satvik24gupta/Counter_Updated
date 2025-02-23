@@ -235,9 +235,20 @@ function resetAllValue(){
 function deleteAll(){
     var ans=confirm("Are you sure you want to delete all counters?");
     if(!ans) return
-    counter_array=[]
-    saveList()
-    updateState()
+    fetch('/delete_all_counter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+        },
+    })
+    .then(response => response.json())
+    .then(data=>{
+        console.log(data);
+        counter_array=data;
+        saveList();
+        updateState(counter_array);
+    })
 }
 
 // Helper function to get CSRF token

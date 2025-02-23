@@ -12,6 +12,7 @@ urlpatterns = [
     path('reset_counter', views.reset_counter, name='reset_counter'),
     path('delete_counter', views.delete_counter, name='delete_counter'),
     path('reset_all_counter_value', views.reset_all_counter_value, name='reset_all_counter_value'),
+    path('delete_all_counter', views.delete_all_counter, name='delete_all_counter'),
     path('get_counters', views.get_counters, name='get_counters'),
     # path('register/', views.register, name='register'),
 ]
