@@ -26,6 +26,18 @@ def login(request):
     else:    
         return render(request, 'login.html')
     
+def register(request):
+    if(request.method == 'POST'):
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+        return redirect('login')
+    else:
+        return render(request, 'register.html')
+
+    
 def home(request):
     if(request.user.is_authenticated):
         return render(request, 'home.html')
